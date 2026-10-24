@@ -1,0 +1,61 @@
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import CreditCard from "./CreditCard";
+
+export default function Hero() {
+  const reduce = useReducedMotion();
+  const ease = [0.22, 1, 0.36, 1] as const;
+
+  const fade = (delay: number) => ({
+    initial: reduce ? false : { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.8, delay, ease },
+  });
+
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-b from-haze to-white pt-14">
+      <div className="mx-auto flex max-w-6xl flex-col items-center px-5 pb-20 pt-14 text-center md:pb-28 md:pt-20">
+        <motion.span
+          {...fade(0.05)}
+          className="rounded-full border border-black/10 bg-white px-3.5 py-1 text-xs font-medium text-mute shadow-sm"
+        >
+          Projeto de demonstração · marca fictícia
+        </motion.span>
+
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 60, rotateX: 18, scale: 0.94 }}
+          animate={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
+          transition={{ duration: 1.1, delay: 0.15, ease }}
+          className="mt-10 w-full max-w-[min(88vw,520px)] md:mt-14"
+        >
+          <CreditCard />
+        </motion.div>
+
+        <motion.h1
+          {...fade(0.35)}
+          className="mt-14 max-w-3xl text-balance text-[clamp(2.1rem,6vw,4.25rem)] font-semibold leading-[1.05] tracking-tight"
+        >
+          Um cartão pensado para simplificar o dia a dia.
+        </motion.h1>
+
+        <motion.p
+          {...fade(0.45)}
+          className="mt-5 max-w-xl text-pretty text-[clamp(1rem,2vw,1.25rem)] leading-relaxed text-mute"
+        >
+          Interface de exemplo com acabamento em titânio, cartão digital e controle pelo aplicativo.
+          Esta página não oferece crédito real.
+        </motion.p>
+
+        <motion.div {...fade(0.55)} className="mt-9">
+          <a
+            href="#/demo"
+            className="btn-press group inline-flex items-center gap-2 rounded-full bg-ink px-7 py-3.5 text-base font-medium text-white shadow-soft transition duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-[0_18px_40px_-12px_rgba(0,0,0,0.35)]"
+          >
+            Explorar a demonstração
+            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </a>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
